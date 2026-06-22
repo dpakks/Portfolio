@@ -2,891 +2,739 @@
 <html lang="en">
 
 <head>
+  <!-- Google Analytics (kept from original) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YMWDE0VTD3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
+    function gtag() { dataLayer.push(arguments); }
     gtag("js", new Date());
-
     gtag("config", "G-YMWDE0VTD3");
   </script>
+
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#000" />
-  <link rel="icon" type="image/x-icon" href="src/png/main-favicon.png" />
-  <!-- aos cdn -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  <!-- stylesheet -->
-  <link rel="stylesheet" href="style.css" />
-  <!-- google fonts-->
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Passions+Conflict&family=Orbitron&family=Fira+Code&family=Six+Caps" />
+  <meta name="theme-color" content="#06060c" />
+  <meta name="description"
+    content="Deepak Kumar. Software, Cloud & AI engineer. Infrastructure as Code, DevOps automation, and LLM systems built to run in production." />
+  <title>My Portfolio</title>
 
-<body class="body light-mode">
+  <link rel="icon" type="image/png" href="avatar_preview.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@600;700;900&family=Fira+Code:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#home">Skip to content</a>
+
+  <!-- Ambient infrastructure background -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <!-- ===================== SIDEBAR / RESOURCE TREE NAV ===================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+      <div class="brand">
+        <span class="brand-mark">~/</span>
+        <span class="brand-name">deepak<span class="brand-dim">.kumar</span></span>
+      </div>
+      <p class="brand-role">SDE  · DevOps · GenAI</p>
+    </div>
+
+    <nav class="tree" aria-label="Primary">
+      <p class="tree-root">portfolio/</p>
+      <ul class="tree-list">
+        <li><a href="#home" class="tree-link active" data-section="home"><span class="tw">├─</span> main.tf</a></li>
+        <li><a href="#about" class="tree-link" data-section="about"><span class="tw">├─</span> about.tf</a></li>
+        <li><a href="#skills" class="tree-link" data-section="skills"><span class="tw">├─</span> skills.tf</a></li>
+        <li><a href="#experience" class="tree-link" data-section="experience"><span class="tw">├─</span> experience.tf</a></li>
+        <li><a href="#projects" class="tree-link" data-section="projects"><span class="tw">├─</span> projects.tf</a></li>
+        <li><a href="#contact" class="tree-link" data-section="contact"><span class="tw">└─</span> outputs.tf</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-foot">
+      <a class="side-social" href="https://github.com/dpakks" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 496 512" aria-hidden="true"><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></svg>
+      </a>
+      <a class="side-social" href="https://www.linkedin.com/in/dpakks/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+      </a>
+      <a class="side-social" href="mailto:deepakkumar.somasundaram@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 512 512" aria-hidden="true"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- mobile top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">~/</span><span class="brand-name">deepak<span class="brand-dim">.kumar</span></span>
+    </div>
+    <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="nav-scrim" id="nav-scrim" aria-hidden="true"></div>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main">
+
+    <!-- ===== HERO / main.tf ===== -->
+    <section class="section hero" id="home">
+      <div class="hero-inner">
+        <div class="hero-left reveal">
+          <p class="eyebrow"># module.engineer</p>
+          <h1 class="hero-name">Deepak Kumar<span class="dot">.</span></h1>
+          <p class="hero-role">
+            <span class="role-tag">Full Stack</span>
+            <span class="role-tag">Cloud</span>
+            <span class="role-tag">DevOps</span>
+            <span class="role-tag">GenAI</span>
+            engineer
+          </p>
+          <p class="hero-lede">
+            I design cloud architectures, automate deployments end to end, and put AI into real
+            products. If it can be automated, I build the pipeline. If it can be smarter, I add the model.
+          </p>
+          <p class="hero-status"><span class="blink-dot"></span> status: <b>open to full time SDE roles</b></p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="src/pdf/Deepak-Resume.pdf" download>
+              <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v8.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+              Download Resume
+            </a>
+            <a class="btn btn-ghost" href="#" data-console-open>Open console &rarr;</a>
+          </div>
+        </div>
+
+        <div class="hero-right reveal">
+          <div class="hcl-card" id="hcl-card">
+            <div class="hcl-bar">
+              <span class="term-dot term-red"></span>
+              <span class="term-dot term-yellow"></span>
+              <span class="term-dot term-grn"></span>
+              <span class="hcl-file">main.tf</span>
+            </div>
+            <pre class="hcl-body"><code id="hcl-code"></code><span class="hcl-caret" id="hcl-caret"></span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ABOUT / about.tf ===== -->
+    <section class="section" id="about">
+      <div class="sec-head reveal">
+        <span class="sec-no">01</span>
+        <h2 class="sec-title">about.tf</h2>
+        <span class="sec-rule"></span>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p>
+            I'm Deepak. I spent <b>four years on a Bachelor's in Electronics and Communication</b>, then concluded I'd
+            much rather boss computers around than do anything that degree intended, and quietly switched to software.
+          </p>
+          <p>
+            From there I put in <b>2+ years as a software engineer</b>, <b>building and shipping full stack apps end to
+            end</b>, ideally <b>without being the one junior who swears "it works on my machine"</b>. Then I decided to
+            make the whole career pivot official with a <b>Master's in Information Systems from Northeastern University,
+            Boston</b>.
+          </p>
+          <p>
+            Most recently I've wandered into <b>AI engineering, building RAG systems and Gen AI tools</b>, because
+            <b>shipping ordinary apps clearly wasn't enough of a personality trait</b>. So now I build the apps and the
+            models, then <b>act mildly surprised when they actually work</b>.
+          </p>
+          <blockquote class="about-quote">"Automate. Deploy. Repeat."</blockquote>
+        </div>
+
+        <!-- Resume card -->
+        <div class="resume-col reveal">
+          <div class="resume-card" id="resume-card" tabindex="0" aria-label="Resume download card">
+            <div class="rc-glow"></div>
+            <div class="rc-top">
+              <span class="rc-label">RESUME</span>
+              <span class="rc-meta-tag">PDF · 2026</span>
+            </div>
+            <div class="rc-main">
+              <div class="rc-avatar"><svg class="px-guy" viewBox="0 0 16 16" width="80" height="80" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" role="img" aria-label="Pixel-art avatar of a developer with glasses"><g fill="#332b47"><rect x="5" y="1" width="6" height="1"/><rect x="4" y="2" width="8" height="1"/><rect x="3" y="3" width="2" height="1"/><rect x="11" y="3" width="2" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="12" y="4" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="12" y="5" width="1" height="1"/></g><g fill="#d2a07c"><rect x="5" y="3" width="6" height="1"/><rect x="4" y="4" width="8" height="1"/><rect x="4" y="5" width="8" height="1"/><rect x="3" y="7" width="1" height="1"/><rect x="11" y="7" width="1" height="1"/><rect x="3" y="8" width="1" height="1"/><rect x="11" y="8" width="1" height="1"/><rect x="4" y="9" width="2" height="1"/><rect x="9" y="9" width="3" height="1"/><rect x="5" y="10" width="6" height="1"/><rect x="6" y="11" width="4" height="1"/></g><g fill="#9d6bff"><rect x="3" y="6" width="9" height="1"/><rect x="4" y="7" width="1" height="1"/><rect x="6" y="7" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="4" y="8" width="3" height="1"/><rect x="8" y="8" width="3" height="1"/></g><g fill="#cbe3f7"><rect x="5" y="7" width="1" height="1"/><rect x="9" y="7" width="1" height="1"/></g><g fill="#b07e5b"><rect x="7" y="7" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/></g><g fill="#8a5640"><rect x="6" y="9" width="3" height="1"/></g><g fill="#232f4a"><rect x="2" y="12" width="4" height="1"/><rect x="10" y="12" width="4" height="1"/><rect x="2" y="13" width="5" height="1"/><rect x="9" y="13" width="5" height="1"/><rect x="2" y="14" width="5" height="1"/><rect x="9" y="14" width="5" height="1"/><rect x="2" y="15" width="12" height="1"/></g><g fill="#e8eef6"><rect x="6" y="12" width="4" height="1"/><rect x="7" y="13" width="2" height="1"/></g><g fill="#34d399"><rect x="7" y="14" width="2" height="1"/></g></svg></div>
+              <div class="rc-fields">
+                <p class="rc-name">Deepak Kumar</p>
+                <p class="rc-role">Full Stack · Cloud · DevOps · GenAI</p>
+                <div class="rc-meta">
+                  <span>BASED <b>USA (Open to relocate)</b></span>
+                  <span>STATUS <b class="rc-active">Open to work</b></span>
+                </div>
+              </div>
+            </div>
+            <a class="rc-download" href="src/pdf/Deepak-Resume.pdf" download aria-label="Download resume PDF">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a1 1 0 0 1 1 1v8.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"/></svg>
+              Download Resume
+            </a>
+          </div>
+
+          <div class="edu-stack">
+            <div class="edu-row reveal">
+              <span class="edu-when">2024 to 2026</span>
+              <div>
+                <p class="edu-school">Northeastern University</p>
+                <p class="edu-deg">M.S. Information Systems · USA</p>
+              </div>
+            </div>
+            <div class="edu-row reveal">
+              <span class="edu-when">2018 to 2022</span>
+              <div>
+                <p class="edu-school">Sri Venkateswara College of Engineering</p>
+                <p class="edu-deg">B.E. Electronics &amp; Communication · Chennai, IN</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SKILLS / skills.tf ===== -->
+    <section class="section" id="skills">
+      <div class="sec-head reveal">
+        <span class="sec-no">02</span>
+        <h2 class="sec-title">skills.tf</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <p class="sec-sub reveal">
+        <span class="cmd-prompt">$</span> my stack : the tools I build with, end to end.
+      </p>
+
+      <ul class="stack-grid reveal" id="stack-grid"></ul>
+    </section>
+
+    <!-- ===== EXPERIENCE / experience.tf ===== -->
+    <section class="section" id="experience">
+      <div class="sec-head reveal">
+        <span class="sec-no">03</span>
+        <h2 class="sec-title">experience.tf</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <p class="sec-sub reveal"><span class="cmd-prompt">$</span> ls ./experience : where I've shipped</p>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-marker"><span class="tf-plus">+</span></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <h3 class="exp-role">Software Engineer 1</h3>
+              <span class="exp-when">Feb 2023 to Jul 2024</span>
+            </div>
+            <p class="exp-co">Prodex Technologies</p>
+            <ul class="exp-pts">
+              <li>Built and extended backend APIs for an asset tracking platform, cutting development turnaround ~20%.</li>
+              <li>Engineered reusable frontend components for an enterprise dashboard, lifting user satisfaction ~40%.</li>
+              <li>Containerized backend services and orchestrated multiple service environments, cutting local setup time ~70%.</li>
+              <li>Designed CI/CD pipelines for builds, tests, and cloud deploys, removing ~50% of manual release effort.</li>
+              <li>Added unit testing across services, reducing defects after release ~30%.</li>
+            </ul>
+            <div class="exp-tags"><span>Backend APIs</span><span>CI/CD</span><span>Containers</span><span>Test Automation</span><span>Frontend</span></div>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-marker"><span class="tf-plus">+</span></div>
+          <div class="exp-card">
+            <div class="exp-top">
+              <h3 class="exp-role">Software Engineer</h3>
+              <span class="exp-when">Jun 2022 to Jan 2023</span>
+            </div>
+            <p class="exp-co">HealthOneCloud</p>
+            <ul class="exp-pts">
+              <li>Developed scalable backend services and reliable APIs powering a healthcare SaaS platform.</li>
+              <li>Automated task tracking and real time notifications via cloud workflows, cutting manual coordination ~75%.</li>
+              <li>Optimized DB operations and stored procedures, decreasing server CPU usage 18%.</li>
+              <li>Managed production cloud infra (firewalls, scaling, cost), reducing cloud spend ~30%.</li>
+              <li>Introduced Infrastructure as Code for env provisioning, cutting setup time ~60%.</li>
+            </ul>
+            <div class="exp-tags"><span>Cloud Infra</span><span>IaC</span><span>Workflow Automation</span><span>DB Tuning</span><span>Cost Optimization</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROJECTS / projects.tf ===== -->
+    <section class="section" id="projects">
+      <div class="sec-head reveal">
+        <span class="sec-no">04</span>
+        <h2 class="sec-title">projects.tf</h2>
+        <span class="sec-rule"></span>
+      </div>
+      <p class="sec-sub reveal"><span class="cmd-prompt">$</span> ls ./projects : things I've shipped</p>
+
+      <div class="proj-grid">
+
+        <article class="proj-card reveal">
+          <div class="proj-head">
+            <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span class="proj-name">"llm_pipeline_debugger"</span> {
+          </div>
+          <h3 class="proj-title">LLM Assisted Pipeline Debugger</h3>
+          <p class="proj-desc">AI service that watches failed GitHub Actions, analyzes logs with an LLM, and posts root cause analysis with fixes directly on pull requests.</p>
+          <ul class="proj-stack"><li>AWS Lambda</li><li>API Gateway</li><li>Bedrock</li><li>Docker</li><li>Terraform</li></ul>
+          <div class="proj-foot">
+            <a href="https://github.com/dpakks/ai-pipeline-debugger" target="_blank" rel="noopener" class="proj-link">view repo &rarr;</a>
+            <span class="proj-brace">}</span>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <div class="proj-head">
+            <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span class="proj-name">"cloud_native_aws"</span> {
+          </div>
+          <h3 class="proj-title">Cloud Native App on AWS</h3>
+          <p class="proj-desc">Full stack PR monitoring platform with OTP auth, RBAC, PR analytics, and automated notifications, deployed on AWS with autoscaling and production grade infra.</p>
+          <ul class="proj-stack"><li>FastAPI</li><li>React</li><li>Redis</li><li>PostgreSQL</li><li>ECS Fargate</li><li>CloudFront</li><li>Terraform</li></ul>
+          <div class="proj-foot">
+            <a href="https://github.com/dpakks/PR-Health-Dashboard" target="_blank" rel="noopener" class="proj-link">view repo &rarr;</a>
+            <span class="proj-brace">}</span>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <div class="proj-head">
+            <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span class="proj-name">"assault_reporting"</span> {
+          </div>
+          <h3 class="proj-title">Assault Reporting System</h3>
+          <p class="proj-desc">Java Swing desktop app for secure incident reporting and case tracking, with role based access, multi org support, and workflow driven case management on a modular OO architecture.</p>
+          <ul class="proj-stack"><li>Java</li><li>Swing</li><li>RBAC</li><li>OOP</li></ul>
+          <div class="proj-foot">
+            <a href="https://github.com/dpakks/Assault-Reporting_System" target="_blank" rel="noopener" class="proj-link">view repo &rarr;</a>
+            <span class="proj-brace">}</span>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <div class="proj-head">
+            <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span class="proj-name">"electronics_store_db"</span> {
+          </div>
+          <h3 class="proj-title">Integrated Database Management System</h3>
+          <p class="proj-desc">Relational system managing products, inventory, customers, and orders for an electronics retailer, with a normalized schema, entity relationships, CRUD, joins, and reporting queries.</p>
+          <ul class="proj-stack"><li>SQL</li><li>Schema Design</li><li>Normalization</li></ul>
+          <div class="proj-foot">
+            <a href="https://github.com/dpakks/Integrated_Electronics_Store_Database_Management_System" target="_blank" rel="noopener" class="proj-link">view repo &rarr;</a>
+            <span class="proj-brace">}</span>
+          </div>
+        </article>
+
+        <article class="proj-card reveal">
+          <div class="proj-head">
+            <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span class="proj-name">"uninest"</span> {
+          </div>
+          <h3 class="proj-title">UniNest</h3>
+          <p class="proj-desc">UI/UX wireframe for an accommodation finding app for international students, with clear listings, location based discovery, and transparent pricing, designed in Figma.</p>
+          <ul class="proj-stack"><li>Figma</li><li>UX</li><li>Wireframing</li></ul>
+          <div class="proj-foot">
+            <a href="https://github.com/dpakks/UniNest" target="_blank" rel="noopener" class="proj-link">view repo &rarr;</a>
+            <span class="proj-brace">}</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== CONTACT / outputs.tf ===== -->
+    <section class="section" id="contact">
+      <div class="sec-head reveal">
+        <span class="sec-no">05</span>
+        <h2 class="sec-title">outputs.tf</h2>
+        <span class="sec-rule"></span>
+      </div>
+
+      <div class="outputs reveal">
+        <h2 class="outputs-h">Let's build something<br />that survives production.</h2>
+        <pre class="outputs-block"><code><span class="o-kw">output</span> <span class="o-str">"email"</span> {
+  value = <a class="o-link" href="mailto:deepakkumar.somasundaram@gmail.com">"deepakkumar.somasundaram@gmail.com"</a>
+}
+<span class="o-kw">output</span> <span class="o-str">"github"</span> {
+  value = <a class="o-link" href="https://github.com/dpakks" target="_blank" rel="noopener">"github.com/dpakks"</a>
+}
+<span class="o-kw">output</span> <span class="o-str">"linkedin"</span> {
+  value = <a class="o-link" href="https://www.linkedin.com/in/dpakks/" target="_blank" rel="noopener">"linkedin.com/in/dpakks"</a>
+}</code></pre>
+        <a class="btn btn-primary" href="mailto:deepakkumar.somasundaram@gmail.com">
+          <svg viewBox="0 0 512 512" width="17" height="17" aria-hidden="true"><path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>
+          Say hello
+        </a>
+      </div>
+
+      <footer class="footer">
+        <span>Built &amp; provisioned by Deepak Kumar</span>
+        <span class="dim">{{ now }}</span>
+      </footer>
+    </section>
+
+  </main>
+
+  <!-- ===================== FLOATING TERMINAL LAUNCHER ===================== -->
+  <button class="console-launcher" id="console-launcher" aria-label="Open terminal" aria-expanded="false" aria-controls="console-dock">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+      <rect x="2" y="4" width="20" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M6 9l3 3-3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="12.5" y1="15" x2="17" y2="15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <span class="launcher-ping" aria-hidden="true"></span>
+  </button>
+
+  <!-- ===================== VS CODE STYLE TERMINAL DOCK ===================== -->
+  <div class="dock-scrim" id="dock-scrim" aria-hidden="true"></div>
+  <aside class="console-dock" id="console-dock" aria-hidden="true" aria-label="Interactive terminal">
+    <div class="dock-resize" id="dock-resize" role="separator" aria-orientation="horizontal" aria-label="Resize terminal" title="Drag to resize"></div>
+    <div class="dock-bar">
+      <span class="dock-tab">
+        <svg class="dock-tab-ico" viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 8l4 4-4 4M12 16h7"/></svg>
+        TERMINAL
+      </span>
+      <span class="dock-tab dock-tab-dim">PROBLEMS</span>
+      <span class="dock-tab dock-tab-dim">OUTPUT</span>
+      <span class="dock-comment">// type <b>help</b> to explore commands</span>
+      <span class="dock-meta">deepak@portfolio:~ · powershell</span>
+      <button class="dock-close" id="dock-close" aria-label="Close terminal" title="Close (Esc)">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="terminal" id="terminal" tabindex="0" aria-label="Interactive terminal. Type help to begin.">
+      <div class="term-body" id="term-body">
+        <div class="term-out" id="term-out"></div>
+        <div class="term-line-in">
+          <span class="prompt"><span class="p-user">deepak@portfolio</span>:<span class="p-path">~</span>$</span>
+          <input id="term-input" class="term-input" type="text" autocomplete="off" autocapitalize="off"
+            autocorrect="off" spellcheck="false" aria-label="Terminal command input" />
+          <span class="in-caret" id="in-caret"></span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ Iconify (brand logos for the stack grid) ============ -->
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 
-  <audio loop="" id="audioPlayer" style="display: none">
-    <source src="src/mp3/preloader.mp3" type="audio/mp3" />
-  </audio>
-  <div id="preloader"></div>
-  <noscript>Allow Javascript</noscript>
-
-  <header>
-    <div class="cursor-inner" id="cursor-inner"></div>
-    <div class="cursor-outer" id="cursor-outer"></div>
-
-    <div class="navbar" id="navbar">
-      <div class="logo" tabindex="0" aria-label="Deepak Kumar logo">
-      </div>
-      <div class="navbar-tabs" id="navbar-tabs">
-        <ul class="navbar-tabs-ul">
-          <li class="home activeThistab" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="100">
-            <a href="#home" tabindex="0" aria-label="Home menu button">
-              &#60;/Home&#62;
-            </a>
-          </li>
-
-          <li class="about" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="300">
-            <a href="#about" aria-label="about menu button">
-              &#60;/AboutMe&#62;
-            </a>
-          </li>
-
-          <li class="education" data-aos="fade-down" data-aos-delay="400">
-            <a href="#education">&#60;/Education&#62;</a>
-          </li>
-
-          <li class="skills" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="500">
-            <a href="#skills" aria-label="skills menu button">
-              &#60;/Skills&#62;
-            </a>
-          </li>
-
-          <li class="experience" data-aos="fade-down" data-aos-delay="400">
-            <a href="#experience">&#60;/Experience&#62;</a>
-          </li>
-
-
-          <li class="projects" class="navbar-tabs-li" data-aos="fade-down" data-aos-delay="700">
-            <a href="#projects" aria-label="projects menu button">
-              &#60;/Projects&#62;
-            </a>
-          </li>
-
-        </ul>
-      </div>
-      <!-- navbar tabs ends -->
-    </div>
-  </header>
-  <!-- header ends here -->
-
-  <main>
-    <!-- hamburger -->
-    <div class="hamburger" id="hamburger" data-aos="fade">
-      <div class="hamburgerbase">
-        <button id="hamburger-button" onclick="hamburgerMenu()" tabindex="0" aria-label="Menu Button">
-          <span class="burger-bar" id="burger-bar1"></span>
-          <span class="burger-bar" id="burger-bar2"></span>
-          <span class="burger-bar" id="burger-bar3"></span>
-        </button>
-      </div>
-    </div>
-    <!-- hamburger -->
-    <div class="mobiletogglemenu" id="mobiletogglemenu">
-      <ul class="mobile-navbar-tabs-ul" id="mobile-ul">
-        <li id="home-mobile-tab" class="mobile-navbar-tabs-li home activeThismobiletab" onclick="hidemenubyli()">
-          <a href="#home" tabindex="0" aria-label="Home menu button">
-            &#60;/Home&#62;
-          </a>
-        </li>
-
-        <li id="aboutme-mobile-tab" class="mobile-navbar-tabs-li about" onclick="hidemenubyli()">
-          <a href="#about" tabindex="0" aria-label="about menu button">
-            &#60;/AboutMe&#62;
-          </a>
-        </li>
-        <li class="education" data-aos="fade-down" data-aos-delay="400">
-          <a href="#education">&#60;/Education&#62;</a>
-        </li>
-        <li id="skills-mobile-tab" class="mobile-navbar-tabs-li skills" onclick="hidemenubyli()">
-          <a href="#skills" tabindex="0" aria-label="skills menu button">
-            &#60;/Skills&#62;
-          </a>
-        </li>
-
-        <li class="mobile-navbar-tabs-li experience" onclick="hidemenubyli()">
-          <a href="#experience">&#60;/Experience&#62;</a>
-        </li>
-
-        <li id="projects-mobile-tab" class="mobile-navbar-tabs-li projects" onclick="hidemenubyli()">
-          <a href="#projects" tabindex="0" aria-label="projects menu button">
-            &#60;/Projects&#62;
-          </a>
-        </li>
-      </ul>
-    </div>
-    <!-- mobile toggle menu ends -->
-
-    <section class="landing-page-container" id="home">
-      <div class="blob"></div>
-
-      <div class="text-content">
-        <article id="hello-friend" data-aos="fade-up" data-aos-delay="0">
-          <p class="jello">N</p>
-          <p class="jello">a</p>
-          <p class="jello">m</p>
-          <p class="jello">a</p>
-          <p class="jello">s</p>
-          <p class="jello">t</p>
-          <p class="jello">e</p>
-          <p class="jello">(</p>
-          <p class="jello">)</p>
-          <p class="jello">;</p>
-          &nbsp;
-          <p class="jello">I</p>
-          <p class="jello">'</p>
-          <p class="jello">m</p>
-        </article>
-        <article id="name" data-aos="fade-up" data-aos-delay="200">
-          <p class="jello">D</p>
-          <p class="jello">e</p>
-          <p class="jello">e</p>
-          <p class="jello">p</p>
-          <p class="jello">a</p>
-          <p class="jello">k</p>
-          &nbsp;
-          <p class="jello">k</p>
-          <p class="jello">u</p>
-          <p class="jello">m</p>
-          <p class="jello">a</p>
-          <p class="jello">r</p>
-          <p class="jello">.</p>
-        </article>
-
-        <article id="work" data-aos="fade-up" data-aos-delay="400">
-          <div>
-            <p class="jello">F</p>
-            <p class="jello">r</p>
-            <p class="jello">o</p>
-            <p class="jello">m</p>
-          </div>
-          <div>
-            <p class="jello">p</p>
-            <p class="jello">i</p>
-            <p class="jello">p</p>
-            <p class="jello">e</p>
-            <p class="jello">l</p>
-            <p class="jello">i</p>
-            <p class="jello">n</p>
-            <p class="jello">e</p>
-            <p class="jello">s</p>
-          </div>
-          <div>
-            <p class="jello">t</p>
-            <p class="jello">o</p>
-          </div>
-          <div>
-            <p class="jello">p</p>
-            <p class="jello">r</p>
-            <p class="jello">o</p>
-            <p class="jello">d</p>
-            <p class="jello">u</p>
-            <p class="jello">c</p>
-            <p class="jello">t</p>
-            <p class="jello">i</p>
-            <p class="jello">o</p>
-            <p class="jello">n</p>
-          </div>
-          <div>
-            <p class="jello">t</p>
-            <p class="jello">o</p>
-          </div>
-          <div>
-            <p class="jello">A</p>
-            <p class="jello">I</p>
-          </div>
-          <div>
-            <p class="jello">—</p>
-          </div>
-          <div>
-            <p class="jello">I</p>
-          </div>
-          <div>
-            <p class="jello">e</p>
-            <p class="jello">n</p>
-            <p class="jello">g</p>
-            <p class="jello">i</p>
-            <p class="jello">n</p>
-            <p class="jello">e</p>
-            <p class="jello">e</p>
-            <p class="jello">r</p>
-          </div>
-          <div>
-            <p class="jello">i</p>
-            <p class="jello">t</p>
-          </div>
-          <div>
-            <p class="jello">a</p>
-            <p class="jello">l</p>
-            <p class="jello">l</p>
-            <p class="jello">.</p>
-          </div>
-        </article>
-        <p id="info-para" data-aos="fade-up" data-aos-delay="600">
-          I design cloud architectures, automate deployments end-to-end, and integrate AI into real-world applications.
-          If it can be automated, I'll build the pipeline. If it can be smarter, I'll add the model.<br /><br />
-          Less talk, more <span style="font-family: 'Fira Code', monospace;"><b>terraform apply</b></span>.
-        </p>
-        <div class="contact-btn-div" data-aos="fade-up" data-aos-delay="800">
-          <a href="mailto:deepakkumar.somasundaram@gmail.com" tabindex="-1">
-            <button class="letsTalkBtn">
-              <p class="letsTalkBtn-text">Let's Talk!</p>
-              <span class="letsTalkBtn-BG"></span>
-            </button></a>
-        </div>
-        <!-- setting div ends -->
-      </div>
-      <!-- contact-btn-div -->
-      </div>
-
-    </section>
-    <!-- landing page ends here -->
-    <section class="about-section-container" id="about" data-aos="fade-up">
-      <div class="about-section">
-        <div class="section-heading">
-          <h2 class="section-heading-article" tabindex="0" aria-label="About me heading">
-            &#60;/AboutMe&#62;
-          </h2>
-          <p class="sectionHeadingP"></p>
-        </div>
-
-        <div class="info-dp-section">
-          <div class="about-info">
-            <p tabindex="0" style="text-align: justify;">
-              I’m an Software Development Engineer focused on LLM engineering, full-stack development, cloud, and
-              DevOps, currently pursuing my
-              Master’s in Information Systems at Northeastern University. I’m passionate about building software that
-              makes systems smarter and developer workflows easier. If something is manual, repetitive, or fragile, I
-              want to automate it, scale it, and make it reliable.
-            </p>
-            <br />
-            <p tabindex="0" style="text-align: justify;">
-              I design and build full-stack applications, cloud infrastructure, CI/CD pipelines, and backend platforms
-              that teams can actually rely on in production. Previously, I’ve automated deployment workflows, improved
-              reliability, optimized cloud operations, and shipped scalable applications across two engineering roles in
-              India.
-            </p>
-            <br />
-            <p tabindex="0" style="text-align: justify;">
-              Lately, I’ve been diving deeper into AI engineering by experimenting with large language models, building
-              intelligent developer tools, and figuring out how to make AI genuinely useful in real-world products. I
-              don’t just focus on models alone; I build the software, infrastructure, and systems needed to make them
-              work in practice.
-            </p>
-            <!-- Resume button -->
-          </div>
-
-          <div class="dp" data-aos="fade-up">
-            <img src="src/webp/linkedin_headshot.png" alt="Deepak Kumar" tabindex="0" aria-label="image of Deepak" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="education-section-container" id="education">
-      <div class="education-section">
-
-        <!-- Heading -->
-        <div class="section-heading" data-aos="fade-up">
-          <h2 class="section-heading-article" tabindex="0" aria-label="Education heading">
-            &#60;/Education&#62;
-          </h2>
-          <p class="sectionHeadingP"></p>
-        </div>
-
-        <div class="edu-cards-wrapper">
-
-          <!-- ===== CARD 1 – Graduate ===== -->
-          <div class="edu-card" data-aos="fade-up">
-            <div class="edu-card-accent"></div>
-            <div class="edu-card-body">
-              <div class="edu-icon-wrapper">
-                <svg class="edu-icon" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M320 32L0 160l320 128 320-128L320 32zM64 192v128l256 128 256-128V192L320 320 64 192z" />
-                </svg>
-              </div>
-              <div class="edu-card-content">
-                <div class="edu-card-top-row">
-                  <span class="edu-date">Sep 2024 – May 2026</span>
-                  <span class="edu-location">Boston, MA</span>
-                </div>
-                <h3 class="edu-university">Northeastern University</h3>
-                <h4 class="edu-degree">Master of Science in Information Systems</h4>
-                <p class="edu-coursework">
-                  Relevant Coursework: Application Engineering &amp; Development, Web Design &amp; User Experience,
-                  Database Management &amp; Design, Network Structures &amp; Cloud Computing, Linux/Unix for Network
-                  Engineers.
-                </p>
-                <div class="edu-tags">
-                  <span>Cloud Computing</span>
-                  <span>Full-Stack Development</span>
-                  <span>Database Design</span>
-                  <span>UX Engineering</span>
-                  <span>Generative AI</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ===== CARD 2 – Undergraduate ===== -->
-          <div class="edu-card" data-aos="fade-up" data-aos-delay="150">
-            <div class="edu-card-accent"></div>
-            <div class="edu-card-body">
-              <div class="edu-icon-wrapper">
-                <svg class="edu-icon" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M96 0C43 0 0 43 0 96v320c0 53 43 96 96 96h320c17.7 0 32-14.3 32-32s-14.3-32-32-32v-64c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H96zm0 384h256v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-288c0-8.8 7.2-16 16-16h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48h192c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z" />
-                </svg>
-              </div>
-              <div class="edu-card-content">
-                <div class="edu-card-top-row">
-                  <span class="edu-date">Aug 2018 – Jun 2022</span>
-                  <span class="edu-location">Chennai, India</span>
-                </div>
-                <h3 class="edu-university">Sri Venkateswara College of Engineering</h3>
-                <h4 class="edu-degree">Bachelor of Engineering in Electronics and Communication</h4>
-                <p class="edu-coursework">
-                  Relevant Coursework: Data Structures &amp; Algorithms, Operating Systems, Object-Oriented Programming.
-                </p>
-                <div class="edu-tags">
-                  <span>Data Structures</span>
-                  <span>Algorithms</span>
-                  <span>OOP</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <!-- edu-cards-wrapper ends -->
-
-      </div>
-    </section>
-    <!-- Education section ends -->
-
-    <section class="skills-section-container" id="skills">
-      <div class="skills-section">
-        <div class="section-heading" data-aos="fade-up">
-          <h2 class="section-heading-article" tabindex="0" aria-label="skills heading">
-            &#60;/Skills&#62;
-          </h2>
-          <p class="sectionHeadingP"></p>
-        </div>
-
-        <div class="frontend-dev-section">
-          <h3 class="frontend-dev-heading" data-aos="fade-up" tabindex="0"
-            aria-label="As a frontend a developer these are the skills i have">
-            Tech Stack
-          </h3>
-          <ul class="tech-stack-wrapper">
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:aws"></span>
-              <span class="tooltip">AWS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:microsoft-azure"></span>
-              <span class="tooltip">AZURE</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:terraform-icon"></span>
-              <span class="tooltip">TERRAFORM</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:packer"></span>
-              <span class="tooltip">PACKER</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:github-actions"></span>
-              <span class="tooltip">GITHUB ACTIONS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:jenkins"></span>
-              <span class="tooltip">JENKINS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:github-icon"></span>
-              <span class="tooltip">GITHUB</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:git-icon"></span>
-              <span class="tooltip">GIT</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:kafka-icon"></span>
-              <span class="tooltip">KAFKA</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:docker-icon"></span>
-              <span class="tooltip">DOCKER</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:kubernetes"></span>
-              <span class="tooltip">KUBERNETES</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:python"></span>
-              <span class="tooltip">PYTHON</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:fastapi-icon"></span>
-              <span class="tooltip">FASTAPI</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:java"></span>
-              <span class="tooltip">JAVA</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:spring-icon"></span>
-              <span class="tooltip">SPRING BOOT</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:c-sharp"></span>
-              <span class="tooltip">C#</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:dotnet"></span>
-              <span class="tooltip">.NET</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:nodejs-icon"></span>
-              <span class="tooltip">NODEJS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:html-5"></span>
-              <span class="tooltip">HTML</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:css-3"></span>
-              <span class="tooltip">CSS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:javascript"></span>
-              <span class="tooltip">JS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:tailwindcss-icon"></span>
-              <span class="tooltip">TAILWIND</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:react"></span>
-              <span class="tooltip">REACTJS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:nextjs-icon"></span>
-              <span class="tooltip">NEXTJS</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:angular-icon"></span>
-              <span class="tooltip">ANGULAR</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:figma"></span>
-              <span class="tooltip">FIGMA</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:c"></span>
-              <span class="tooltip">C</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:c-plusplus"></span>
-              <span class="tooltip">C++</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:mysql"></span>
-              <span class="tooltip">MYSQL</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:postgresql"></span>
-              <span class="tooltip">POSTGRESQL</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:mongodb-icon"></span>
-              <span class="tooltip">MONGODB</span>
-            </li>
-
-            <li class="tech-stack-box" data-aos="fade-up">
-              <span class="iconify tech-stack-logo" data-icon="logos:redis"></span>
-              <span class="tooltip">REDIS</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section class="experience-section-container" id="experience">
-      <div class="experience-section">
-
-        <!-- Heading -->
-        <div class="section-heading" data-aos="fade-up">
-          <h2 class="section-heading-article">
-            &#60;/Experience&#62;
-          </h2>
-          <p class="sectionHeadingP"></p>
-        </div>
-
-        <div class="exp-timeline">
-
-          <!-- Center line -->
-          <div class="exp-timeline-line"></div>
-
-          <!-- ===== ITEM 1 – LEFT CARD ===== -->
-          <div class="exp-item exp-item-left" data-aos="fade-right">
-            <div class="exp-card">
-              <div class="exp-card-accent"></div>
-              <div class="exp-card-inner">
-                <div class="exp-card-top-row">
-                  <span class="exp-date">Feb 2023 – Jul 2024</span>
-                  <span class="exp-location">Chennai, IN</span>
-                </div>
-                <h4 class="exp-company">Prodex Technologies</h4>
-                <h3 class="exp-role">Software Engineer 1</h3>
-                <ul class="exp-bullets">
-                  <li>Built and extended backend APIs for an asset tracking platform, enabling new product features and
-                    cutting development turnaround time by ~20%.</li>
-                  <li>Engineered reusable frontend components for an enterprise dashboard, reducing client-side defects
-                    and improving user satisfaction by ~40%.</li>
-                  <li>Containerized backend services and orchestrated multi-service environments, reducing local
-                    development setup time by ~70%.</li>
-                  <li>Designed CI/CD pipelines to automate builds, testing, and deployments to cloud environments,
-                    eliminating ~50% of manual release effort.</li>
-                  <li>Implemented comprehensive unit testing across backend services, improving code reliability and
-                    reducing post-release defects by ~30%.</li>
-                </ul>
-                <div class="exp-tags">
-                  <span>Backend APIs</span>
-                  <span>CI/CD Pipelines</span>
-                  <span>Containerization</span>
-                  <span>Test Automation</span>
-                  <span>Frontend Engineering</span>
-                </div>
-
-              </div>
-            </div>
-            <div class="exp-dot"></div>
-          </div>
-
-          <!-- ===== ITEM 2 – RIGHT CARD ===== -->
-          <div class="exp-item exp-item-right" data-aos="fade-left" data-aos-delay="150">
-            <div class="exp-dot"></div>
-            <div class="exp-card">
-              <div class="exp-card-accent"></div>
-              <div class="exp-card-inner">
-                <div class="exp-card-top-row">
-                  <span class="exp-date">Jun 2022 – Jan 2023</span>
-                  <span class="exp-location">Chennai, IN</span>
-                </div>
-                <h4 class="exp-company">HealthOneCloud</h4>
-                <h3 class="exp-role">Software Engineer</h3>
-                <ul class="exp-bullets">
-                  <li>Developed scalable backend services for a healthcare SaaS platform, building reliable APIs that
-                    powered internal operational workflows.</li>
-                  <li>Automated developer task tracking and real-time team notifications through cloud-based workflow
-                    orchestration, cutting manual coordination by ~75%.</li>
-                  <li>Optimized database operations and stored procedures, decreasing server CPU usage by 18% and
-                    improving overall application responsiveness.</li>
-                  <li>Managed production cloud infrastructure — firewall configurations, scaling schedules, and cost
-                    strategies — reducing cloud spending by ~30%.</li>
-                  <li>Introduced Infrastructure as Code to automate environment provisioning for new team members,
-                    eliminating manual setup and reducing provisioning time by ~60%.</li>
-                </ul>
-                <div class="exp-tags">
-                  <span>Cloud Infrastructure</span>
-                  <span>Infrastructure as Code</span>
-                  <span>Workflow Automation</span>
-                  <span>Database Optimization</span>
-                  <span>Cost Optimization</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <!-- exp-timeline ends -->
-
-      </div>
-    </section>
-    <!-- Experience section ends -->
-
-
-
-    <section class="projects-section-container" id="projects">
-      <div class="projects-section-div">
-        <div class="section-heading" data-aos="fade-up">
-          <h2 class="section-heading-article" tabindex="0" aria-label="My projects starts from here">
-            &#60;/Projects&#62;
-          </h2>
-          <p class="sectionHeadingP"></p>
-        </div>
-        <div class="project-boxes-div">
-          <div data-aos="fade-up" class="project-box-wrapper">
-            <div class="project-box project-box2" id="project-box2">
-              <div class="info-div">
-                <article class="ProjectHeading">LLM Assisted Pipeline Debugger</article>
-                <p class="ProjectDescription">
-                  Built an AI-powered service that monitors failed GitHub Actions workflows, analyzes logs using an LLM,
-                  and posts root-cause analysis with suggested fixes directly on pull requests. Designed with AWS
-                  Lambda, API Gateway, Bedrock, Docker, and Terraform to streamline debugging and reduce developer
-                  effort.
-                </p>
-                <div class="project-buttons">
-                  <a href="https://github.com/dpakks/ai-pipeline-debugger" target="_blank" class="github-redirect"
-                    aria-label="Visit Pexelicons on GitHub">
-                    <img src="src/svg/github.svg" alt="github redirect button" />
-                  </a>
-                </div>
-              </div>
-              <div class="image-div">
-                <img src="src/webp/LLM.png" alt="atomicasher website preview image" />
-              </div>
-            </div>
-          </div>
-          <!-- ---------------------- -->
-          <div data-aos="fade-up" class="project-box-wrapper">
-            <div class="project-box project-box2" id="project-box2">
-              <div class="info-div">
-                <article class="ProjectHeading">Cloud-Native App on AWS</article>
-                <p class="ProjectDescription">
-                  Built a full-stack PR monitoring platform using FastAPI, React, Redis, and PostgreSQL with OTP-based
-                  authentication, role-based access, PR analytics, and automated notifications. Deployed on AWS with ECS
-                  Fargate, S3, CloudFront, Route 53, and Terraform, with GitHub Actions CI/CD, auto scaling, and
-                  production-grade cloud infrastructure.
-                </p>
-                <div class="project-buttons">
-                  <a href="https://github.com/dpakks/PR-Health-Dashboard" target="_blank" class="github-redirect"
-                    aria-label="Visit Pexelicons on GitHub">
-                    <img src="src/svg/github.svg" alt="github redirect button" />
-                  </a>
-                </div>
-              </div>
-              <div class="image-div">
-                <img src="src/webp/cloud.png" alt="stopscams website preview image" />
-              </div>
-            </div>
-          </div>
-          <!-- ---------------------- -->
-          <div data-aos="fade-up" class="project-box-wrapper">
-            <div class="project-box project-box2" id="project-box2">
-              <div class="info-div">
-                <article class="ProjectHeading">Assault Reporting System</article>
-                <p class="ProjectDescription">
-                  Built a Java Swing desktop application for secure incident reporting and case tracking with role-based
-                  access control, multi-organization support, and workflow-driven case management. Designed with modular
-                  enterprise architecture and object-oriented principles to ensure maintainability, scalability, and
-                  clear separation of concerns.
-                </p>
-                <div class="project-buttons">
-                  <a href="https://github.com/dpakks/Assault-Reporting_System" target="_blank" class="github-redirect"
-                    aria-label="Visit Pexelicons on GitHub">
-                    <img src="src/svg/github.svg" alt="github redirect button" />
-                  </a>
-                </div>
-              </div>
-              <div class="image-div">
-                <img src="src/webp/assault.png" alt="NoteSync website preview image" />
-              </div>
-            </div>
-          </div>
-
-          <div data-aos="fade-up" class="project-box-wrapper">
-            <div class="project-box project-box2" id="project-box2">
-              <div class="info-div">
-                <article class="ProjectHeading">Integrated Database Management System</article>
-                <p class="ProjectDescription">
-                  Integrated Electronics Store Database Management System
-                  Built a relational database system for managing products, inventory, customers, and orders in an
-                  electronics retail environment. Implemented normalized schema design, entity relationships, CRUD
-                  operations, joins, and reporting queries to support efficient transaction tracking and data
-                  consistency.
-                </p>
-                <div class="project-buttons">
-                  <a href="https://github.com/dpakks/Integrated_Electronics_Store_Database_Management_System"
-                    target="_blank" class="github-redirect" aria-label="Visit Pexelicons on GitHub">
-                    <img src="src/svg/github.svg" alt="github redirect button" />
-                  </a>
-                </div>
-              </div>
-              <div class="image-div">
-                <img src="src/webp/db.png" alt="NoteSync website preview image" />
-              </div>
-            </div>
-          </div>
-
-          <div data-aos="fade-up" class="project-box-wrapper">
-            <div class="project-box project-box2" id="project-box2">
-              <div class="info-div">
-                <article class="ProjectHeading">UniNest</article>
-                <p class="ProjectDescription">
-                  UniNest is a UI/UX wireframe designed in Figma for an accommodation-finding app tailored to
-                  international students. The design simplifies housing search with clear listings, location-based
-                  discovery, and transparent pricing. It focuses on accessibility and reducing stress for students
-                  relocating to a new country.
-                </p>
-                <div class="project-buttons">
-                  <a href="https://github.com/dpakks/UniNest" target="_blank" class="github-redirect"
-                    aria-label="Visit Pexelicons on GitHub">
-                    <img src="src/svg/github.svg" alt="github redirect button" />
-                  </a>
-                </div>
-              </div>
-              <div class="image-div">
-                <img src="src/webp/Housing.png" alt="NoteSync website preview image" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <!-- main ends here -->
-
-  <footer id="footer">
-    <button class="fas" id="backtotopbutton" onclick="scrolltoTopfunction()">
-      <article aria-label="Back to top">&#8592;BACK TO TOP</article>
-    </button>
-    <div class="footer-background">
-      <div class="footer-blob"></div>
-    </div>
-    <div class="footer-foreground">
-      <div class="footercontainer">
-        <div class="two-words">
-          <article tabindex="0" aria-label="Learning, Living, and Leveling Up, my quote">
-            "Automate. Deploy. Repeat."
-          </article>
-        </div>
-        <div class="social-media-container">
-          <div class="getintouch-heading">
-            <article>GetinTouch();</article>
-          </div>
-          <div class="logos">
-            <a href="https://www.linkedin.com/in/dpakks/" target="_blank" aria-label="My Linkdin">
-              <svg class="SocialHandle" viewBox="0 0 448 512">
-                <path
-                  d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z" />
-              </svg>
-            </a>
-            <a href="https://github.com/dpakks" target="_blank" aria-label="My github">
-              <svg viewBox="0 0 496 512" class="SocialHandle">
-                <path
-                  d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z" />
-              </svg>
-            </a>
-            <a href="mailto:deepakkumar.somasundaram@gmail.com" target="_blank" aria-label="My G mail">
-              <svg id="GmailLogo" viewBox="0 0 512 512">
-                <path
-                  d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Wave animation replacing bitmoji -->
-        <div class="footer-wave-container">
-          <svg class="footer-wave" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path class="wave-path wave-1"
-              d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,70 1440,60 L1440,120 L0,120 Z" />
-            <path class="wave-path wave-2"
-              d="M0,70 C300,20 600,100 900,50 C1100,20 1300,80 1440,70 L1440,120 L0,120 Z" />
-            <path class="wave-path wave-3"
-              d="M0,80 C240,40 480,100 720,60 C960,20 1200,90 1440,80 L1440,120 L0,120 Z" />
-          </svg>
-        </div>
-
-        <!-- <div class="footer-bottom">
-        <article>Design & Built by Deepak Kumar</article>
-      </div> -->
-      </div>
-    </div>
-  </footer>
-
-  <script src="main.js"></script>
-
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
-    AOS.init();
-  </script>
+  (function () {
+    "use strict";
+    var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var $ = function (s, r) { return (r || document).querySelector(s); };
 
-  <script>
-    function openURL() {
-      // var url = "src/pdf/Vinod's Resume.pdf";
+    /* ---------- footer timestamp ---------- */
+    (function () {
+      var f = document.querySelector(".footer .dim");
+      if (f) f.textContent = "© " + new Date().getFullYear();
+    })();
 
-      window.open(url, "_blank");
-    }
-  </script>
+    /* ============================================================
+       1) AMBIENT BACKGROUND : node network + faint stars
+       ============================================================ */
+    (function bg() {
+      var canvas = $("#bg-canvas");
+      if (!canvas) return;
+      var ctx = canvas.getContext("2d");
+      var w, h, nodes = [], stars = [], raf;
+      function size() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        var count = Math.min(64, Math.floor((w * h) / 26000));
+        nodes = [];
+        for (var i = 0; i < count; i++) nodes.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - 0.5) * 0.22, vy: (Math.random() - 0.5) * 0.22, r: Math.random() * 1.5 + 0.6 });
+        stars = [];
+        for (var s = 0; s < 120; s++) stars.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.1, a: Math.random() * 0.5 + 0.1 });
+      }
+      function frame() {
+        ctx.clearRect(0, 0, w, h);
+        for (var s = 0; s < stars.length; s++) { var st = stars[s]; ctx.fillStyle = "rgba(180,190,220," + st.a + ")"; ctx.beginPath(); ctx.arc(st.x, st.y, st.r, 0, 6.3); ctx.fill(); }
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i]; n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > w) n.vx *= -1;
+          if (n.y < 0 || n.y > h) n.vy *= -1;
+          for (var j = i + 1; j < nodes.length; j++) {
+            var m = nodes[j], dx = n.x - m.x, dy = n.y - m.y, d = Math.hypot(dx, dy);
+            if (d < 150) { ctx.strokeStyle = "rgba(132,79,186," + (0.14 * (1 - d / 150)) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke(); }
+          }
+          ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 6.3); ctx.fillStyle = "rgba(107,197,248,0.5)"; ctx.fill();
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      size(); window.addEventListener("resize", size);
+      if (REDUCED) { frame(); cancelAnimationFrame(raf); } else frame();
+    })();
 
-  <script>
-    const cursorInner = document.getElementById("cursor-inner");
-    const cursorOuter = document.getElementById("cursor-outer");
-    const links = document.querySelectorAll("a,label,button");
-
-    document.addEventListener("mousemove", function (e) {
-      const posX = e.clientX;
-      const posY = e.clientY;
-
-      cursorInner.style.left = `${posX}px`;
-      cursorInner.style.top = `${posY}px`;
-
-      cursorOuter.animate(
-        {
-          left: `${posX}px`,
-          top: `${posY}px`,
-        },
-        { duration: 500, fill: "forwards" }
-      );
-
-      links.forEach((link) => {
-        link.addEventListener("mouseenter", () => {
-          cursorInner.classList.add("hover");
-          cursorOuter.classList.add("hover");
-        });
-        link.addEventListener("mouseleave", () => {
-          cursorInner.classList.remove("hover");
-          cursorOuter.classList.remove("hover");
-        });
+    /* ============================================================
+       2) MOBILE MENU + SCROLLSPY
+       ============================================================ */
+    (function nav() {
+      var btn = $("#menu-btn"), sidebar = $("#sidebar"), scrim = $("#nav-scrim");
+      function close() { sidebar.classList.remove("open"); scrim.classList.remove("show"); btn.classList.remove("active"); btn.setAttribute("aria-expanded", "false"); }
+      if (btn) btn.addEventListener("click", function () {
+        var open = sidebar.classList.toggle("open");
+        scrim.classList.toggle("show", open); btn.classList.toggle("active", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
       });
-    });
+      if (scrim) scrim.addEventListener("click", close);
+      document.querySelectorAll(".tree-link").forEach(function (a) { a.addEventListener("click", close); });
+
+      var links = {};
+      document.querySelectorAll(".tree-link").forEach(function (a) { links[a.getAttribute("data-section")] = a; });
+      if ("IntersectionObserver" in window) {
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) {
+            if (en.isIntersecting) {
+              Object.keys(links).forEach(function (k) { links[k].classList.remove("active"); });
+              var l = links[en.target.id]; if (l) l.classList.add("active");
+            }
+          });
+        }, { rootMargin: "-45% 0px -50% 0px" });
+        document.querySelectorAll("main .section").forEach(function (s) { io.observe(s); });
+      }
+    })();
+
+    /* ============================================================
+       3) SCROLL REVEAL
+       ============================================================ */
+    (function reveal() {
+      var els = document.querySelectorAll(".reveal");
+      if (REDUCED || !("IntersectionObserver" in window)) { els.forEach(function (e) { e.classList.add("in"); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } });
+      }, { threshold: 0.12 });
+      els.forEach(function (e) { io.observe(e); });
+    })();
+
+    /* ============================================================
+       4) HERO HCL TYPEWRITER
+       ============================================================ */
+    (function hcl() {
+      var codeEl = $("#hcl-code"), caret = $("#hcl-caret");
+      if (!codeEl) return;
+      var lines = [
+        ['resource ', 'k'], ['"engineer" ', 's'], ['"deepak"', 'n'], [' {\n', 't'],
+        ['  role     = ', 't'], ['"SDE · Cloud · GenAI"\n', 's'],
+        ['  location = ', 't'], ['"USA (open to relocate)"\n', 's'],
+        ['  focus    = ', 't'], ['["SDE", "Cloud", "DevOps", "GenAI"]\n', 's'],
+        ['  stack    = ', 't'], ['module.skills\n', 'm'],
+        ['  status   = ', 't'], ['"available"  ', 's'], ['# full time SDE\n', 'c'],
+        ['  motto    = ', 't'], ['"Automate. Deploy. Repeat."\n', 's'],
+        ['}', 't']
+      ];
+      var plain = lines.map(function (l) { return l[0]; }).join("");
+      function highlighted() {
+        var cls = { k: "hl-kw", s: "hl-str", n: "hl-name", t: "hl-txt", m: "hl-mod", c: "hl-com" };
+        return lines.map(function (l) {
+          return '<span class="' + cls[l[1]] + '">' + l[0].replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</span>";
+        }).join("");
+      }
+      if (REDUCED) { codeEl.innerHTML = highlighted(); if (caret) caret.style.display = "none"; return; }
+      var i = 0;
+      function type() {
+        if (i <= plain.length) {
+          codeEl.textContent = plain.slice(0, i);
+          i += (plain[i] === "\n" ? 1 : 1);
+          i++;
+          setTimeout(type, 11);
+        } else {
+          codeEl.innerHTML = highlighted();
+          if (caret) caret.style.display = "none";
+        }
+      }
+      // start when hero visible
+      var card = $("#hcl-card");
+      if ("IntersectionObserver" in window && card) {
+        var io = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { type(); io.disconnect(); } }, { threshold: 0.3 });
+        io.observe(card);
+      } else type();
+    })();
+
+    /* ============================================================
+       5) STACK GRID (iconify brand logos)
+       ============================================================ */
+    (function stack() {
+      var ul = $("#stack-grid");
+      if (!ul) return;
+      var items = [
+        ["logos:aws", "AWS"], ["logos:microsoft-azure", "Azure"], ["logos:terraform-icon", "Terraform"],
+        ["logos:packer", "Packer"], ["logos:docker-icon", "Docker"], ["logos:kubernetes", "Kubernetes"],
+        ["logos:github-actions", "GitHub Actions"], ["logos:jenkins", "Jenkins"], ["logos:git-icon", "Git"],
+        ["logos:kafka-icon", "Kafka"], ["logos:python", "Python"], ["logos:fastapi-icon", "FastAPI"],
+        ["logos:java", "Java"], ["logos:spring-icon", "Spring"], ["logos:nodejs-icon", "Node.js"],
+        ["logos:c-sharp", "C#"], ["logos:dotnet", "dotNET"], ["logos:react", "React"],
+        ["logos:nextjs-icon", "Next.js"], ["logos:angular-icon", "Angular"], ["logos:javascript", "JavaScript"],
+        ["logos:typescript-icon", "TypeScript"], ["logos:tailwindcss-icon", "Tailwind"], ["logos:figma", "Figma"],
+        ["logos:postgresql", "PostgreSQL"], ["logos:mysql", "MySQL"], ["logos:mongodb-icon", "MongoDB"], ["logos:redis", "Redis"]
+      ];
+      items.forEach(function (it) {
+        var li = document.createElement("li");
+        li.className = "stack-box";
+        li.innerHTML = '<span class="iconify stack-logo" data-icon="' + it[0] + '"></span><span class="stack-tip">' + it[1] + "</span>";
+        ul.appendChild(li);
+      });
+    })();
+
+    /* ============================================================
+       6) INTERACTIVE TERMINAL
+       ============================================================ */
+    (function terminal() {
+      var term = $("#terminal"), input = $("#term-input"), outEl = $("#term-out"), bodyEl = $("#term-body");
+      if (!term || !input || !outEl) return;
+      var history = [], hIdx = -1, booted = false;
+      function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+      function write(html, cls) { var d = document.createElement("div"); d.className = "t-line" + (cls ? " " + cls : ""); d.innerHTML = html; outEl.appendChild(d); bodyEl.scrollTop = bodyEl.scrollHeight; return d; }
+      function echo(cmd) { write('<span class="prompt"><span class="p-user">deepak@portfolio</span>:<span class="p-path">~</span>$</span> <span class="t-cmd">' + esc(cmd) + "</span>"); }
+      function link(href, text, dl) { return '<a class="t-link" href="' + href + '"' + (dl ? " download" : ' target="_blank" rel="noopener"') + ">" + text + "</a>"; }
+
+      var C = {
+        help: function () {
+          write("Available commands:", "t-accent");
+          [["whoami", "who I am, in one line"], ["about", "the longer story"], ["skills", "tech I work with"],
+           ["experience", "where I've shipped"], ["projects", "things I've built"], ["education", "the paper trail"],
+           ["resume", "download my resume"], ["contact", "how to reach me"], ["clear", "clear the screen"]].forEach(function (r) {
+            write('<span class="t-key">' + r[0] + '</span><span class="t-desc">' + r[1] + "</span>", "t-row");
+          });
+        },
+        whoami: function () { write("Deepak Kumar: Software / Cloud / AI engineer. If it's manual, I automate it. If it's fragile, I make it reliable.", "t-grn"); },
+        about: function () {
+          write("SDE focused on LLM engineering, full stack, cloud and DevOps. Finishing an MS in Information Systems at Northeastern.", "t-grn");
+          write("Two engineering roles in India: backend platforms, CI/CD, IaC, cloud cost wins. Lately: AI dev tools that ship.", "t-grn");
+        },
+        skills: function () {
+          write("Core domains in my stack:", "t-accent");
+          write("  + Cloud & IaC       AWS, Azure, Terraform, Packer", "t-grn");
+          write("  + DevOps & CI/CD    Docker, Kubernetes, GitHub Actions, Jenkins, Git", "t-grn");
+          write("  + Backend           Python, FastAPI, Java, Spring, Node.js, C#, .NET", "t-grn");
+          write("  + Frontend          React, Next.js, Angular, TypeScript, Tailwind", "t-grn");
+          write("  + Data & Streaming  PostgreSQL, MySQL, MongoDB, Redis, Kafka", "t-grn");
+          write("Scroll to skills.tf for the full provider stack.", "t-dim");
+        },
+        experience: function () {
+          write("Prodex Technologies : Software Engineer 1 (Feb 2023 to Jul 2024)", "t-accent");
+          write("  Backend APIs, dashboard UI, containerization, CI/CD, unit testing.", "t-grn");
+          write("HealthOneCloud : Software Engineer (Jun 2022 to Jan 2023)", "t-accent");
+          write("  Healthcare SaaS backend, workflow automation, DB tuning (18% lower CPU), IaC, 30% lower cloud spend.", "t-grn");
+        },
+        projects: function () {
+          write("Selected builds:", "t-accent");
+          write("  1. LLM Assisted Pipeline Debugger : " + link("https://github.com/dpakks/ai-pipeline-debugger", "github"), "t-grn");
+          write("  2. Cloud Native App on AWS : " + link("https://github.com/dpakks/PR-Health-Dashboard", "github"), "t-grn");
+          write("  3. Assault Reporting System : " + link("https://github.com/dpakks/Assault-Reporting_System", "github"), "t-grn");
+          write("Scroll to projects.tf for the full list.", "t-dim");
+        },
+        education: function () {
+          write("MS, Information Systems : Northeastern University (2024 to 2026), USA", "t-grn");
+          write("BE, Electronics & Communication : Sri Venkateswara College of Engineering (2018 to 2022)", "t-grn");
+        },
+        contact: function () {
+          write("email     " + link("mailto:deepakkumar.somasundaram@gmail.com", "deepakkumar.somasundaram@gmail.com"), "t-grn");
+          write("github    " + link("https://github.com/dpakks", "github.com/dpakks"), "t-grn");
+          write("linkedin  " + link("https://www.linkedin.com/in/dpakks/", "linkedin.com/in/dpakks"), "t-grn");
+        },
+        resume: function () {
+          write("output.resume = " + link("src/pdf/Deepak-Resume.pdf", "Deepak-Resume.pdf", true), "t-grn");
+          write("Starting download…", "t-dim");
+          try { var a = $(".rc-download"); if (a) a.click(); } catch (e) {}
+        },
+        clear: function () { printWelcome(); },
+        ls: function () { write("about.tf  skills.tf  experience.tf  projects.tf  outputs.tf  resume.pdf  main.tf", "t-grn"); },
+        pwd: function () { write("/home/deepak/portfolio", "t-grn"); },
+        date: function () { write(new Date().toString(), "t-grn"); },
+        echo: function (a) { write(esc(a.join(" ")), "t-grn"); },
+        sudo: function () { write("Nice try. You already have root on me. \uD83D\uDD13", "t-dim"); }
+      };
+      function run(raw) {
+        var cmd = raw.trim(); if (!cmd) { write(""); return; }
+        echo(cmd); history.push(cmd); hIdx = history.length;
+        var p = cmd.split(/\s+/), name = p[0].toLowerCase(), args = p.slice(1);
+        var alias = { cls: "clear", work: "experience", cv: "resume", social: "contact", edu: "education" };
+        if (alias[name]) name = alias[name];
+        if (name === "cat") return write("use a real command. try 'help'.", "t-dim");
+        if (C[name]) { try { C[name](args); } catch (e) { write("error: command failed", "t-dim"); } }
+        else write("command not found: " + esc(name) + ". Type 'help'.", "t-dim");
+      }
+      function printWelcome() {
+        outEl.innerHTML = "";
+        write("Welcome to deepak@portfolio : interactive console v2.0", "t-accent");
+        write("Type 'help' for commands.", "t-dim");
+        write("");
+      }
+      function resetTerminal() { history = []; hIdx = -1; printWelcome(); }
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") { var v = input.value; input.value = ""; run(v); }
+        else if (e.key === "ArrowUp") { if (history.length) { hIdx = Math.max(0, hIdx - 1); input.value = history[hIdx] || ""; } e.preventDefault(); }
+        else if (e.key === "ArrowDown") { if (history.length) { hIdx = Math.min(history.length, hIdx + 1); input.value = history[hIdx] || ""; } e.preventDefault(); }
+      });
+      term.addEventListener("click", function () { input.focus(); });
+
+      /* ---- Floating dock: open / close ---- */
+      var dock = $("#console-dock"), scrim = $("#dock-scrim"),
+          launcher = $("#console-launcher"), closeBtn = $("#dock-close");
+      var dockOpen = false;
+
+      function openDock(cmd) {
+        if (dock.classList.contains("open")) { if (cmd) run(cmd); input.focus(); return; }
+        dockOpen = true;
+        dock.classList.add("open"); dock.setAttribute("aria-hidden", "false");
+        scrim.classList.add("show");
+        launcher.classList.add("hidden"); launcher.setAttribute("aria-expanded", "true");
+        document.body.classList.add("dock-active");
+        resetTerminal();
+        // wait for the slide-up transition before focusing so the page doesn't jump
+        setTimeout(function () { input.focus(); if (cmd) run(cmd); bodyEl.scrollTop = bodyEl.scrollHeight; }, REDUCED ? 0 : 260);
+      }
+      function closeDock() {
+        dockOpen = false;
+        dock.classList.remove("open"); dock.setAttribute("aria-hidden", "true");
+        scrim.classList.remove("show");
+        launcher.classList.remove("hidden"); launcher.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("dock-active");
+        launcher.focus();
+      }
+
+      launcher.addEventListener("click", function () { openDock(); });
+      closeBtn.addEventListener("click", closeDock);
+      scrim.addEventListener("click", closeDock);
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape" && dockOpen) closeDock(); });
+
+      /* ---- Drag the top edge to resize, like VS Code ---- */
+      var resizeH = $("#dock-resize"), resizing = false, startY = 0, startH = 0;
+      function clampH(h) { return Math.max(140, Math.min(Math.round(window.innerHeight * 0.92), h)); }
+      if (resizeH) {
+        resizeH.addEventListener("pointerdown", function (e) {
+          resizing = true; startY = e.clientY; startH = dock.getBoundingClientRect().height;
+          document.body.classList.add("dock-resizing");
+          try { resizeH.setPointerCapture(e.pointerId); } catch (_) {}
+          e.preventDefault();
+        });
+        resizeH.addEventListener("pointermove", function (e) {
+          if (!resizing) return;
+          dock.style.height = clampH(startH + (startY - e.clientY)) + "px";  // drag up = taller
+        });
+        function endResize(e) {
+          if (!resizing) return;
+          resizing = false; document.body.classList.remove("dock-resizing");
+          try { resizeH.releasePointerCapture(e.pointerId); } catch (_) {}
+          bodyEl.scrollTop = bodyEl.scrollHeight;
+        }
+        resizeH.addEventListener("pointerup", endResize);
+        resizeH.addEventListener("pointercancel", endResize);
+        // double-click the sash to reset to default height
+        resizeH.addEventListener("dblclick", function () { dock.style.height = ""; });
+      }
+
+      // Any element with data-console-open (hero button, sidebar link) opens the dock
+      document.querySelectorAll("[data-console-open]").forEach(function (el) {
+        el.addEventListener("click", function (e) { e.preventDefault(); openDock(); });
+      });
+
+      // Stop the launcher from bouncing after the first interaction
+      ["click"].forEach(function (ev) {
+        launcher.addEventListener(ev, function () { launcher.classList.add("seen"); }, { once: true });
+      });
+    })();
+  })();
   </script>
 </body>
 
