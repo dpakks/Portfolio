@@ -26,10 +26,18 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Orbitron:wght@600;700;900&family=Fira+Code:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Keep the decorative canvas from becoming the right-click target -->
+  <style>
+    #bg-canvas,
+    .bg-grid {
+      pointer-events: none;
+    }
+  </style>
 </head>
 
 <body>
-  <a class="skip-link" href="#home">Skip to content</a>
+  <a class="skip-link" href="/home" data-route="home">Skip to content</a>
 
   <!-- Ambient infrastructure background -->
   <canvas id="bg-canvas" aria-hidden="true"></canvas>
@@ -48,14 +56,14 @@
     <nav class="tree" aria-label="Primary">
       <p class="tree-root">portfolio/</p>
       <ul class="tree-list">
-        <li><a href="#home" class="tree-link active" data-section="home"><span class="tw">├─</span> main.tf</a></li>
-        <li><a href="#about" class="tree-link" data-section="about"><span class="tw">├─</span> about.tf</a></li>
-        <li><a href="#skills" class="tree-link" data-section="skills"><span class="tw">├─</span> skills.tf</a></li>
-        <li><a href="#experience" class="tree-link" data-section="experience"><span class="tw">├─</span>
+        <li><a href="/home" class="tree-link active" data-section="home"><span class="tw">├─</span> main.tf</a></li>
+        <li><a href="/about" class="tree-link" data-section="about"><span class="tw">├─</span> about.tf</a></li>
+        <li><a href="/skills" class="tree-link" data-section="skills"><span class="tw">├─</span> skills.tf</a></li>
+        <li><a href="/experience" class="tree-link" data-section="experience"><span class="tw">├─</span>
             experience.tf</a></li>
-        <li><a href="#projects" class="tree-link" data-section="projects"><span class="tw">├─</span> projects.tf</a>
+        <li><a href="/projects" class="tree-link" data-section="projects"><span class="tw">├─</span> projects.tf</a>
         </li>
-        <li><a href="#contact" class="tree-link" data-section="contact"><span class="tw">└─</span> outputs.tf</a></li>
+        <li><a href="/contact" class="tree-link" data-section="contact"><span class="tw">└─</span> outputs.tf</a></li>
       </ul>
     </nav>
 
@@ -365,6 +373,34 @@
 
       <div class="proj-grid">
 
+
+        <article class="proj-card reveal">
+          <div class="proj-head">
+            <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span
+              class="proj-name">"terraguard"</span> {
+          </div>
+          <h3 class="proj-title">TerraGuard</h3>
+          <p class="proj-desc">GenAI powered Terraform review platform that analyzes plan JSON, checks cloud policy
+            violations with RAG, proposes safe fixes through MCP agents, and tracks PR decisions in a senior engineer
+            dashboard.</p>
+          <ul class="proj-stack">
+            <li>FastAPI</li>
+            <li>React</li>
+            <li>LangGraph</li>
+            <li>RAG</li>
+            <li>GitHub MCP</li>
+            <li>Gmail MCP</li>
+            <li>PostgreSQL</li>
+            <li>ECS Fargate</li>
+            <li>Terraform</li>
+          </ul>
+          <div class="proj-foot">
+            <a href="https://github.com/dpakks/TerraGuard" target="_blank" rel="noopener"
+              class="proj-link">view repo &rarr;</a>
+            <span class="proj-brace">}</span>
+          </div>
+        </article>
+
         <article class="proj-card reveal">
           <div class="proj-head">
             <span class="proj-kw">resource</span> <span class="proj-type">"project"</span> <span
@@ -611,31 +647,103 @@
       })();
 
       /* ============================================================
-         2) MOBILE MENU + SCROLLSPY
+         2) MOBILE MENU + CLEAN URL ROUTING + SCROLLSPY
          ============================================================ */
-      (function nav() {
+      (function navRouter() {
+        var routes = ["home", "about", "skills", "experience", "projects", "contact"];
         var btn = $("#menu-btn"), sidebar = $("#sidebar"), scrim = $("#nav-scrim");
-        function close() { sidebar.classList.remove("open"); scrim.classList.remove("show"); btn.classList.remove("active"); btn.setAttribute("aria-expanded", "false"); }
+        var links = {};
+        var routeLocked = false;
+
+        document.querySelectorAll(".tree-link").forEach(function (a) {
+          links[a.getAttribute("data-section")] = a;
+        });
+
+        function closeMenu() {
+          if (sidebar) sidebar.classList.remove("open");
+          if (scrim) scrim.classList.remove("show");
+          if (btn) {
+            btn.classList.remove("active");
+            btn.setAttribute("aria-expanded", "false");
+          }
+        }
+
+        function routeFromPath() {
+          var path = window.location.pathname
+            .replace(/^\/+|\/+$/g, "")
+            .replace(/^index\.html$/, "");
+          return routes.indexOf(path) !== -1 ? path : "home";
+        }
+
+        function setActive(route) {
+          Object.keys(links).forEach(function (key) {
+            links[key].classList.toggle("active", key === route);
+          });
+        }
+
+        function scrollToRoute(route, smooth) {
+          var section = document.getElementById(route);
+          if (!section) return;
+          routeLocked = true;
+          section.scrollIntoView({
+            behavior: smooth && !REDUCED ? "smooth" : "auto",
+            block: "start"
+          });
+          setActive(route);
+          window.setTimeout(function () { routeLocked = false; }, smooth ? 700 : 100);
+        }
+
+        function navigate(route, replace, smooth) {
+          if (routes.indexOf(route) === -1) route = "home";
+          var method = replace ? "replaceState" : "pushState";
+          window.history[method]({ route: route }, "", "/" + route);
+          scrollToRoute(route, smooth !== false);
+          closeMenu();
+        }
+
         if (btn) btn.addEventListener("click", function () {
           var open = sidebar.classList.toggle("open");
-          scrim.classList.toggle("show", open); btn.classList.toggle("active", open);
+          if (scrim) scrim.classList.toggle("show", open);
+          btn.classList.toggle("active", open);
           btn.setAttribute("aria-expanded", open ? "true" : "false");
         });
-        if (scrim) scrim.addEventListener("click", close);
-        document.querySelectorAll(".tree-link").forEach(function (a) { a.addEventListener("click", close); });
 
-        var links = {};
-        document.querySelectorAll(".tree-link").forEach(function (a) { links[a.getAttribute("data-section")] = a; });
+        if (scrim) scrim.addEventListener("click", closeMenu);
+
+        document.querySelectorAll(".tree-link, [data-route]").forEach(function (a) {
+          a.addEventListener("click", function (event) {
+            var route = a.getAttribute("data-section") || a.getAttribute("data-route");
+            if (!route) return;
+            event.preventDefault();
+            navigate(route, false, true);
+          });
+        });
+
+        window.addEventListener("popstate", function () {
+          scrollToRoute(routeFromPath(), false);
+        });
+
         if ("IntersectionObserver" in window) {
           var io = new IntersectionObserver(function (entries) {
-            entries.forEach(function (en) {
-              if (en.isIntersecting) {
-                Object.keys(links).forEach(function (k) { links[k].classList.remove("active"); });
-                var l = links[en.target.id]; if (l) l.classList.add("active");
-              }
-            });
-          }, { rootMargin: "-45% 0px -50% 0px" });
-          document.querySelectorAll("main .section").forEach(function (s) { io.observe(s); });
+            if (routeLocked) return;
+            var visible = entries.filter(function (entry) { return entry.isIntersecting; });
+            if (!visible.length) return;
+            visible.sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; });
+            var route = visible[0].target.id;
+            if (routes.indexOf(route) === -1) return;
+            setActive(route);
+            if (routeFromPath() !== route) {
+              window.history.replaceState({ route: route }, "", "/" + route);
+            }
+          }, { rootMargin: "-35% 0px -55% 0px", threshold: [0.05, 0.2, 0.4, 0.6] });
+          document.querySelectorAll("main .section").forEach(function (section) { io.observe(section); });
+        }
+
+        var initialRoute = routeFromPath();
+        if (window.location.pathname === "/" || window.location.pathname.endsWith("/index.html")) {
+          navigate("home", true, false);
+        } else {
+          scrollToRoute(initialRoute, false);
         }
       })();
 
